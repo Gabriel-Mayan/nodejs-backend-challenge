@@ -2,7 +2,7 @@
 
 # Decisões de Projeto
 ## Gitflow
-- Optei por utilizar o gitflow, pois trará algumas vantagens na hora de fazer o desenvolvimento, como um maior controle em cada task em que estarei trabalhando.
+- Optei por utilizar o gitflow, pois trará algumas vantagens na hora de fazer o desenvolvimento, como um maior controle em cada task em que estarei trabalhando e me permitirá corrigir de maneira mais agil e eficiente os bugs que possam vir a aparecer.
 - Todo o projeto ficará na branch "main", teremos uma branch de homologação e testes, chamada "hml" e as demais branchs serão as que vou trabalhar em cada task em especifico.
 ## Configrando ambiente
 
