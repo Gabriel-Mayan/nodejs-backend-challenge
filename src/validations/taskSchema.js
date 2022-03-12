@@ -1,4 +1,5 @@
 const yup = require('yup');
+const { compareDate } = require('../helpers/handleDate');
 
 const createTaskSchema = yup.object().shape({
 	description: yup
@@ -7,39 +8,32 @@ const createTaskSchema = yup.object().shape({
 		.required(),
 
 	deadline: yup
-		.object()
-		.strict()
-		.required()
-		.test('equals', `É necessário adcionar um prazo para tarefa`, (date) => {
-			const valuesToTest = [date.days, date.hours, date.minutes];
-			const test = valuesToTest.every(test => test === 0);
-			return !test;
-		})
-		.shape({
-			days: yup
-				.number()
-				.strict()
-				.min(0)
-				.notRequired(),
-			hours: yup
-				.number()
-				.strict()
-				.min(0)
-				.notRequired(),
-			minutes: yup
-				.number()
-				.strict()
-				.min(0)
-				.notRequired()
-		})
-});
-
-const testParamsSchema = yup.object().shape({
-	id: yup
 		.string()
 		.strict()
-		.uuid()
 		.required()
+		.test('equals', `Não é possível adcionar um prazo de expiração anterior ao momento atual`, (deadline) => {
+			const deadlineInDate = new Date(deadline);
+			const isValidDate = compareDate(new Date(), deadlineInDate);
+			return isValidDate;
+		})
 });
 
-module.exports = { createTaskSchema, testParamsSchema }
+const updateTaskSchema = yup.object().shape({
+	description: yup
+		.string()
+		.strict(),
+
+	deadline: yup
+		.string()
+		.strict()
+		.test('equals', `Não é possível adcionar um prazo de expiração anterior ao momento atual`, (deadline) => {
+			if (deadline) {
+				const deadlineInDate = new Date(deadline);
+				const isValidDate = compareDate(new Date(), deadlineInDate);
+				return isValidDate;
+			}
+			return true;
+		})
+});
+
+module.exports = { createTaskSchema, updateTaskSchema }

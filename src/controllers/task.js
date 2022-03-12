@@ -1,6 +1,23 @@
-const { addTime } = require('../helpers/handleDate');
+const { returnTaskStatus } = require('../helpers/utils');
 const { generateUuid } = require('../helpers/handleUuid');
-const { insertInfo, findOneBy, updateInfo } = require('../helpers/handleKnex');
+const { insertInfo, findOneBy, updateInfo, getInfo } = require('../helpers/handleKnex');
+
+const listTask = async (request, response) => {
+	try {
+		const { id: userId } = request.user;
+		const showTask = [];
+		const tasks = await getInfo('task', { userId });
+
+		tasks.map((info) => {
+			info.status = returnTaskStatus(info)
+			showTask.push(info)
+		});
+
+		return response.status(200).json(showTask);
+	} catch (error) {
+		return response.status(400).json('Erro ao listar tarefas')
+	}
+}
 
 const createTask = async (request, response) => {
 	try {
@@ -11,7 +28,7 @@ const createTask = async (request, response) => {
 			id: generateUuid(description),
 			userId: user.id,
 			description,
-			deadline: addTime(new Date(), deadline),
+			deadline: new Date(deadline),
 		});
 
 		return response.status(200).json('Tarefa cadastrada com sucesso!');
@@ -37,9 +54,9 @@ const finalizeTask = async (request, response) => {
 		if (task.deletedAt)
 			return response.status(200).json('Não é possível completar tarefas excluidas');
 
-		const taskCompleted = await updateInfo('task', conditions, { completedAt: new Date() })
+		await updateInfo('task', conditions, { completedAt: new Date() })
 
-		return response.status(200).json(taskCompleted);
+		return response.status(200).json("Tarefa concluída com sucesso!");
 	} catch (error) {
 		return response.status(400).json('Falha ao completar a tarefa')
 	}
@@ -52,6 +69,8 @@ async function updateTask(request, response) {
 		const { description, deadline } = request.body;
 
 		const conditions = { id, userId };
+		const infoToUpdate = { description };
+
 		const task = await findOneBy('task', conditions)
 
 		if (!task)
@@ -63,15 +82,16 @@ async function updateTask(request, response) {
 		if (task.deletedAt)
 			return response.status(200).json('Não é possível editar tarefas excluidas');
 
-		const taskEdited = await updateInfo('task', conditions, {
-			description,
-			deadline: addTime(new Date(), deadline),
-		});
+		if (deadline) {
+			infoToUpdate.deadline = new Date(deadline);
+		}
 
-		return response.status(200).json(taskEdited);
+		await updateInfo('task', conditions, infoToUpdate);
+
+		return response.status(200).json('Tarefa atualizada com sucesso!');
 	} catch (error) {
 		return response.status(400).json('Falha ao atualizar a tarefa')
 	}
 }
 
-module.exports = { createTask, finalizeTask, updateTask };
+module.exports = { createTask, finalizeTask, updateTask, listTask };
