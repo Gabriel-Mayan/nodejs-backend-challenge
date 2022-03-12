@@ -1,10 +1,24 @@
-const clearUserObject = (user) => {
-  delete user.createdAt;
-  delete user.updatedAt;
-  delete user.deletedAt;
-  delete user.password;
+const { compareDate } = require('./handleDate');
 
-  return user;
+const clearUserObject = (user) => {
+	delete user.createdAt;
+	delete user.updatedAt;
+	delete user.deletedAt;
+	delete user.password;
+
+	return user;
 };
 
-module.exports = { clearUserObject };
+const returnTaskStatus = (task) => {
+	const test = compareDate(new Date(), task.deadline);
+
+	if (task.completedAt) {
+		return 'Tarefa completa'
+	}
+	if (!test) {
+		return 'Tarefa atrasada'
+	}
+	return 'Tarefa em progresso'
+};
+
+module.exports = { clearUserObject, returnTaskStatus };
