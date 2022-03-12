@@ -1,13 +1,11 @@
 const knex = require('../services/knex');
 
-const insertInfo = async (table, values) => {
-	const insertedInfo = await knex(table).insert(values).returning('*');
-	return insertedInfo[0];
-};
+const insertInfo = async (table, values) => await knex(table).insert(values);
+const findOneBy = async (table, conditons) => await knex(table).where(conditons).first();
 
-const findOneBy = async (table, conditons) => {
-	const info = await knex(table).where(conditons).first();
-	return info;
+const updateInfo = async (table, conditions, values) => {
+	values.updatedAt = new Date();
+	await knex(table).where(conditions).update(values);
 };
 
 const getInfoPaginated = async (table, conditons, page, pageSize) => {
@@ -18,4 +16,4 @@ const getInfoPaginated = async (table, conditons, page, pageSize) => {
 	return info;
 };
 
-module.exports = { insertInfo, findOneBy, getInfoPaginated }
+module.exports = { insertInfo, findOneBy, updateInfo, getInfoPaginated }
