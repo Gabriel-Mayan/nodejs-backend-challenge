@@ -1,5 +1,23 @@
+const { returnTaskStatus } = require('../helpers/utils');
 const { generateUuid } = require('../helpers/handleUuid');
-const { insertInfo, findOneBy, updateInfo } = require('../helpers/handleKnex');
+const { insertInfo, findOneBy, updateInfo, getInfo } = require('../helpers/handleKnex');
+
+const listTask = async (request, response) => {
+	try {
+		const { id: userId } = request.user;
+		const showTask = [];
+		const tasks = await getInfo('task', { userId });
+
+		tasks.map((info) => {
+			info.status = returnTaskStatus(info)
+			showTask.push(info)
+		});
+
+		return response.status(200).json(showTask);
+	} catch (error) {
+		return response.status(400).json('Erro ao listar tarefas')
+	}
+}
 
 const createTask = async (request, response) => {
 	try {
@@ -76,4 +94,4 @@ async function updateTask(request, response) {
 	}
 }
 
-module.exports = { createTask, finalizeTask, updateTask, getTaskFromUser };
+module.exports = { createTask, finalizeTask, updateTask, listTask };
