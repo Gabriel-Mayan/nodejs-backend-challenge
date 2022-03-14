@@ -10,7 +10,7 @@ const createUser = async (request, response) => {
 		await insertInfo('users', {
 			id: generateUuid(email),
 			email,
-			userType: 'user',
+			userType: 'User',
 			password: encryptedPassword,
 		});
 

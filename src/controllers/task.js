@@ -4,8 +4,8 @@ const { insertInfo, findOneBy, updateInfo, getInfo } = require('../helpers/handl
 
 const listTask = async (request, response) => {
 	try {
-		const { id: userId } = request.user;
 		const showTask = [];
+		const { id: userId } = request.user;
 		const tasks = await getInfo('task', { userId });
 
 		tasks.map((info) => {

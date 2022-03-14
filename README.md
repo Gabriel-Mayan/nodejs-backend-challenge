@@ -17,6 +17,7 @@
 - Rode o comando "yarn dev" para startar o servidor
 ## Observações Importantes
 - As requisições para a api com datas deve estar no padrão AAAA-DD-MM-HR-MI-SS (ano, dia, mês, horas, minutos e segundos), sendo horas, minutos e segundos opcionais
+- Existe uma pasta chamada .collections que contém uma collection do postman para facilitar as requisições
 # Decisões de Projeto
 ## Gitflow
 - Optei por utilizar o gitflow, pois trará algumas vantagens na hora de fazer o desenvolvimento, como um maior controle em cada task em que estarei trabalhando e me permitirá corrigir de maneira mais agil e eficiente os bugs que possam vir a aparecer.
@@ -42,3 +43,14 @@ Optei por instalar as dependencias que eu mais utilizo em meus projetos
 - Utilizarei containers docker para poder manter o servidor de banco de dados ativo
 - Todos os testes serão feitos com o postman
 - Inicialmente, estarei utilizando o DBeaver para rodar o banco de dados postgrees, porém, ao longo do projeto, serão substituidos pelo MySQL e o MySql Workbanch
+# Rotas e suas funções (Resumo)
+O projeto conta com 8 rotas, cada uma possunindo as seguintes caracteristicas
+
+- A rota "/" é a rota d eteste, só é utilizada para saber se a comunicação com o servidor tá ok
+- A rota "/user/create" é a rota de criação de usuario, ela recebe "email" e "password", alem de um "confirmPassword" para poder funcionar adequadamente
+- A rota "/login" serve para gerar um token de acesso com as informações de determinado usuario
+- A rota "/task/list" lista todas as tarefas pertencentes a um usuario, é necessário um token de acesso
+- A rota "/task/create" cria uma tarefa atrelada ao usuario, é necessário token de acesso
+- A rota "/task/finalize/:id" recebe como parametro o id da tarefa que você deseja finalizar, necessário autenticação
+- A rota "/task/update/:id" recebe como parametro o id da tarefa que você deseja atualizar, e alguma informação para atualizar, necessário autenticação
+- A rota "/admin/list-all-tasks" só pode ser acessada por adm's, ela recebe três parametros opcionais, a "page" que mostra qual pagina você quer ver, a "pageSize" que limita a quantidade de itens e filterOverdue que recebe um "true" caso você queira listar todas as tarefas atrasadas. Ex: "base_url/admin/list-all-tasks?page=1&pageSize=10&filterOverdue=true"
