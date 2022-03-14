@@ -9,13 +9,28 @@ const updateInfo = async (table, conditions, values) => {
 	await knex(table).where(conditions).update(values);
 };
 
+const getInfoPaginated = async (table, conditions, page, pageSize) => {
+	page = Number(page) || 1;
+	pageSize = Number(pageSize) || 12;
 
-const getInfoPaginated = async (table, conditons, page, pageSize) => {
-	page = page || 1;
-	pageSize = pageSize || 12;
-
-	const info = await knex(table).where(conditons).limit(pageSize).offset((page - 1) * pageSize);
+	const info = await knex(table).where(conditions).limit(pageSize).offset((page - 1) * pageSize);
 	return info;
 };
 
-module.exports = { insertInfo, findOneBy, updateInfo, getInfoPaginated, getInfo }
+const getOverduePaginated = async (table, conditions, page, pageSize) => {
+	page = Number(page) || 1;
+	pageSize = Number(pageSize) || 12;
+
+	const info = await knex(table)
+		.where(conditions)
+		.andWhere(function () {
+			this.where('deadline', '<', new Date())
+		})
+		.limit(pageSize)
+		.offset((page - 1) * pageSize);
+
+	return info;
+
+};
+
+module.exports = { insertInfo, findOneBy, updateInfo, getInfoPaginated, getOverduePaginated, getInfo }
