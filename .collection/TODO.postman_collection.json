@@ -1,0 +1,282 @@
+{
+	"info": {
+		"_postman_id": "080a3c1d-267a-401f-a562-55bbf12f02d1",
+		"name": "TODO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"gabrielmaan@gmail.com\",\r\n    \"password\": \"1234\",\r\n    \"confimPassword\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/user/create",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"\",\r\n    \"password\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQxZGE4OGE3LWYzMzUtNDNmMi1hZjI5LWM2NmVkYmQ1OWYyNiIsImVtYWlsIjoiZ2FicmllbG1hYW5AZ21haWwuY29tIiwidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNjQ2OTczMDE2fQ.2rwo_uR-_DnQEUVjEyE4nxjhONMsw8R7_HOO7Ba-eN8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deadline\": \"2022-03-11\",\r\n    \"description\": \"asd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/task/create",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"task",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Finalize Task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/task/finalize/ef391418-8f79-4263-a4f0-c7ccdd21fe03",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"task",
+						"finalize",
+						"ef391418-8f79-4263-a4f0-c7ccdd21fe03"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQxZGE4OGE3LWYzMzUtNDNmMi1hZjI5LWM2NmVkYmQ1OWYyNiIsImVtYWlsIjoiZ2FicmllbG1hYW5AZ21haWwuY29tIiwidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNjQ2OTczMDE2fQ.2rwo_uR-_DnQEUVjEyE4nxjhONMsw8R7_HOO7Ba-eN8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deadline\": \"2022-11-25\",\r\n    \"description\": \"asd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/task/update/46d2d940-dd6c-44e4-af22-4afdbaf459b8",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"task",
+						"update",
+						"46d2d940-dd6c-44e4-af22-4afdbaf459b8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Task",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJlMzI4NDQ5LTNkZGEtNGEzNi1hZTQ0LTAzZTFkNWY3MTg5OCIsImVtYWlsIjoiZ2FicmllbEBnbWFpbC5jb20iLCJ1c2VyVHlwZSI6InVzZXIiLCJpYXQiOjE2NDcxMTkwMzd9.R2S8_UkFEYYJYMOnfvrIARWCCzegn6STT6f91PlfgCA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/task/list",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"task",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Tasks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJlMzI4NDQ5LTNkZGEtNGEzNi1hZTQ0LTAzZTFkNWY3MTg5OCIsImVtYWlsIjoiZ2FicmllbEBnbWFpbC5jb20iLCJ1c2VyVHlwZSI6InVzZXIiLCJpYXQiOjE2NDcxMTkwMzd9.R2S8_UkFEYYJYMOnfvrIARWCCzegn6STT6f91PlfgCA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/task/list-all?page=1&pageSize=10&filterOverdue=true",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"task",
+						"list-all"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						},
+						{
+							"key": "filterOverdue",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3333"
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNhM2JjOWZjLTAwNTYtNDdiMy05NGQwLTRlYjk0NmIxZDg0ZCIsImVtYWlsIjoiZ2FicmllbG1heWFuQGdtYWlsLmNvbSIsInVzZXJUeXBlIjoidXNlciIsImlhdCI6MTY0Njc4NjE0NX0.DHp3k4PTYnn8fEH8OWbnJUSBEtN5YD8-9cOk9u0elWM"
+		}
+	]
+}

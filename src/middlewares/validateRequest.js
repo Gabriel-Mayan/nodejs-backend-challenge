@@ -24,4 +24,23 @@ const validateParams = (schema) => async (request, response, next) => {
 		return response.status(500).json(error.message);
 	}
 };
-module.exports = { validateRequest, validateBody, validateParams };
+
+const validateQuery = (schema) => async (request, response, next) => {
+	try {
+		await schema.validate(request.query);
+		next();
+	} catch (error) {
+		return response.status(500).json(error.message);
+	}
+};
+
+const validateUser = (schema) => async (request, response, next) => {
+	try {
+		await schema.validate(request.user);
+		next();
+	} catch (error) {
+		return response.status(500).json(error.message);
+	}
+};
+
+module.exports = { validateRequest, validateBody, validateParams, validateQuery, validateUser };
