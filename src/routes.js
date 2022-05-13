@@ -18,7 +18,8 @@ const routes = Router();
 routes.get('/', (_, response) => response.status(200).json({ message: 'Teste OK' }));
 
 routes.post('/login', validateBody(loginSchema), login);
-routes.post('/user/create', validateBody(createUserSchema), createUser);
+routes.post('/create_user', validateBody(createUserSchema), createUser);
+
 routes.get('/task/list', authentication, listTask);
 routes.post('/task/create', authentication, validateBody(createTaskSchema), createTask);
 routes.post('/task/finalize/:id', authentication, validateParams(testParamsSchema), finalizeTask);
