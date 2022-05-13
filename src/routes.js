@@ -21,9 +21,9 @@ routes.post('/login', validateBody(loginSchema), login);
 routes.post('/create_user', validateBody(createUserSchema), createUser);
 
 routes.get('/task/list', authentication, listTask);
-routes.post('/task/create', authentication, validateBody(createTaskSchema), createTask);
-routes.post('/task/finalize/:id', authentication, validateParams(testParamsSchema), finalizeTask);
-routes.post('/task/update/:id', authentication, validateRequest(checkEmptyRequestSchema), validateParams(testParamsSchema), validateBody(updateTaskSchema), updateTask);
+routes.post('/user/create_task', authentication, validateBody(createTaskSchema), createTask);
+routes.post('/user/finalize_task/:id', authentication, validateParams(testParamsSchema), finalizeTask);
+routes.post('/user/update_task/:id', authentication, validateRequest(checkEmptyRequestSchema), validateParams(testParamsSchema), validateBody(updateTaskSchema), updateTask);
 routes.get('/admin/list-all-tasks', authentication, validateUser(isAdmin), validateQuery(getTasksSchema), getAllTasks);
 
 module.exports = routes;
