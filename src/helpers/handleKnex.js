@@ -22,11 +22,11 @@ const getTasksPaginated = async (page, pageSize) => {
 	return info;
 };
 
-const getTasksOverduePaginated = async (table, page, pageSize) => {
+const getTasksOverduePaginated = async (page, pageSize) => {
 	page = Number(page) || 1;
 	pageSize = Number(pageSize) || 12;
 
-	const info = await knex(table)
+	const info = await knex('task')
 		.select('users.email', 'task.description', 'task.deadline')
 		.where(function () {
 			this.where('deadline', '<', new Date())

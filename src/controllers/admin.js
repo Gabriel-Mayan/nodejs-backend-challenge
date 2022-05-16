@@ -1,20 +1,27 @@
-const { getTasksPaginated, getOverduePaginated } = require('../helpers/handleKnex');
+const { returnTaskStatus } = require('../helpers/utils');
+const { getTasksPaginated, getTasksOverduePaginated } = require('../helpers/handleKnex');
 
 const getAllTasks = async (request, response) => {
 	try {
-		let task = '';
+		let tasks;
+		let showTask = [];
 		const { page, pageSize, filterOverdue } = request.query;
 
 		if (filterOverdue === 'true') {
-			task = await getTasksOverduePaginated('task', page, pageSize);
+			tasks = await getTasksOverduePaginated(page, pageSize);
 		}
 		else {
-			task = await getTasksPaginated(page, pageSize);
+			tasks = await getTasksPaginated(page, pageSize);
 		}
 
-		return response.status(200).json(task);
+		tasks.map((info) => {
+			info.deadline = returnTaskStatus(info);
+			showTask.push(info);
+		});
+
+		return response.status(200).json(showTask);
 	} catch (error) {
-		return response.status(400).json(error.message)
+		return response.status(400).json('Falha ao Listar as tasks');
 	}
 }
 
