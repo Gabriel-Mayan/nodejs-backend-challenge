@@ -9,7 +9,7 @@ const listTask = async (request, response) => {
 		const tasks = await getInfo('task', { userId });
 
 		tasks.map((info) => {
-			info.status = returnTaskStatus(info)
+			info.deadline = returnTaskStatus(info)
 			showTask.push(info)
 		});
 
@@ -46,13 +46,13 @@ const finalizeTask = async (request, response) => {
 		const task = await findOneBy('task', conditions)
 
 		if (!task)
-			return response.status(200).json('Tarefa inexistente ou não partence ao usuario');
+			return response.status(400).json('Tarefa inexistente ou não partence ao usuario');
 
 		if (task.completedAt)
-			return response.status(200).json('Tarefa já concluída');
+			return response.status(400).json('Tarefa já Finalizada...');
 
 		if (task.deletedAt)
-			return response.status(200).json('Não é possível completar tarefas excluidas');
+			return response.status(400).json('Não é possível completar tarefas excluidas');
 
 		await updateInfo('task', conditions, { completedAt: new Date() })
 
@@ -74,13 +74,13 @@ async function updateTask(request, response) {
 		const task = await findOneBy('task', conditions)
 
 		if (!task)
-			return response.status(200).json('Tarefa inexistente ou não partence ao usuario');
+			return response.status(400).json('Tarefa inexistente ou não partence ao usuario');
 
 		if (task.completedAt)
-			return response.status(200).json('Não é possível editar tarefas já concluídas');
+			return response.status(400).json('Não é possível editar tarefas já concluídas');
 
 		if (task.deletedAt)
-			return response.status(200).json('Não é possível editar tarefas excluidas');
+			return response.status(400).json('Não é possível editar tarefas excluidas');
 
 		if (deadline) {
 			infoToUpdate.deadline = new Date(deadline);

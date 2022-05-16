@@ -5,7 +5,7 @@ const isAdmin = yup.object().shape({
 		.string()
 		.strict()
 		.required()
-		.test('equals', 'O usuario deve ser Administrador', (user) => user === 'Admin')
+		.test('equals', 'O usuario deve ser Administrador', (user) => user === 'admin')
 });
 
 const getTasksSchema = yup.object().shape({

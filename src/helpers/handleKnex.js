@@ -9,23 +9,29 @@ const updateInfo = async (table, conditions, values) => {
 	await knex(table).where(conditions).update(values);
 };
 
-const getInfoPaginated = async (table, conditions, page, pageSize) => {
+const getTasksPaginated = async (page, pageSize) => {
 	page = Number(page) || 1;
 	pageSize = Number(pageSize) || 12;
 
-	const info = await knex(table).where(conditions).limit(pageSize).offset((page - 1) * pageSize);
+	const info = await knex('task')
+		.select('users.email', 'task.description', 'task.deadline')
+		.join('users', 'task.userId', 'users.id')
+		.limit(pageSize)
+		.offset((page - 1) * pageSize);
+
 	return info;
 };
 
-const getOverduePaginated = async (table, conditions, page, pageSize) => {
+const getTasksOverduePaginated = async (table, page, pageSize) => {
 	page = Number(page) || 1;
 	pageSize = Number(pageSize) || 12;
 
 	const info = await knex(table)
-		.where(conditions)
-		.andWhere(function () {
+		.select('users.email', 'task.description', 'task.deadline')
+		.where(function () {
 			this.where('deadline', '<', new Date())
 		})
+		.join('users', 'task.userId', 'users.id')
 		.limit(pageSize)
 		.offset((page - 1) * pageSize);
 
@@ -33,4 +39,4 @@ const getOverduePaginated = async (table, conditions, page, pageSize) => {
 
 };
 
-module.exports = { insertInfo, findOneBy, updateInfo, getInfoPaginated, getOverduePaginated, getInfo }
+module.exports = { insertInfo, findOneBy, updateInfo, getTasksPaginated, getTasksOverduePaginated, getInfo }

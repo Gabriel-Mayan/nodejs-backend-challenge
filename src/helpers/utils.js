@@ -11,14 +11,26 @@ const clearUserObject = (user) => {
 
 const returnTaskStatus = (task) => {
 	const test = compareDate(new Date(), task.deadline);
+	const status = task.completedAt ?
+		'Tarefa Completa!!!' : task.deletedAt ? 'Tarefa Excluida' : !test ? 'Tarefa Atrasada' : 'Em Progresso...';
 
-	if (task.completedAt) {
-		return 'Tarefa completa'
-	}
-	if (!test) {
-		return 'Tarefa atrasada'
-	}
-	return 'Tarefa em progresso'
+	const date = formatDate(new Date(task.deadline));
+	const hours = formatHours(new Date(task.deadline));
+
+	return { status, date, hours }
 };
+
+function formatDate(date) {
+	return [
+		date.getFullYear(),
+		(date.getMonth() < 10 ? '0' : '') + (date.getMonth() + 1),
+		date.getDate(),
+	].join('-');
+}
+
+function formatHours(date) {
+	return (date.getHours() < 10 ? '0' : '') + date.getHours() + ":" +
+		(date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
+}
 
 module.exports = { clearUserObject, returnTaskStatus };

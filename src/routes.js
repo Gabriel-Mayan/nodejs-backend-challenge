@@ -20,10 +20,11 @@ routes.get('/', (_, response) => response.status(200).json({ message: 'Teste OK'
 routes.post('/login', validateBody(loginSchema), login);
 routes.post('/create_user', validateBody(createUserSchema), createUser);
 
-routes.get('/task/list', authentication, listTask);
+routes.get('/user/list_task', authentication, listTask);
 routes.post('/user/create_task', authentication, validateBody(createTaskSchema), createTask);
 routes.post('/user/finalize_task/:id', authentication, validateParams(testParamsSchema), finalizeTask);
 routes.post('/user/update_task/:id', authentication, validateRequest(checkEmptyRequestSchema), validateParams(testParamsSchema), validateBody(updateTaskSchema), updateTask);
-routes.get('/admin/list-all-tasks', authentication, validateUser(isAdmin), validateQuery(getTasksSchema), getAllTasks);
+
+routes.get('/admin/list_all_tasks', authentication, validateUser(isAdmin), validateQuery(getTasksSchema), getAllTasks);
 
 module.exports = routes;
